@@ -1,0 +1,42 @@
+{
+  "pluginAlias": "Homebridge Soil Mositure and Temperature sensor",
+  "pluginType": "accessory",
+  "singular": false,
+  "customUi": false,
+  "schema": {
+    "type": "object",
+    "properties": {
+      "name": {
+        "title": "Name",
+        "type": "string",
+        "required": true,
+        "default": "My Soil Mositure and Temperature sensor",
+        "description": "Plugin name as displayed in the Homebridge log."
+      },
+      "notificationID": {
+        "title": "Notification ID",
+        "type": "string",
+        "required": true,
+        "default": ""
+      },
+      "notificationPassword": {
+        "title": "Notification password",
+        "type": "string",
+        "required": false,
+        "default": ""
+      }
+    }
+  },
+  "form": [
+    "name",
+    {
+      "type": "fieldset",
+      "expandable": true,
+      "title": "Notification server",
+      "items": [
+        "notificationID",
+        "notificationPassword"
+      ]
+    }
+  ]
+}

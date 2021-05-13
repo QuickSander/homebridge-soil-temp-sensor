@@ -51,6 +51,9 @@
     "semantic-release-cli": "^5.4.3"
   },
   "release": {
-    "branches": ["main", "next"]
+    "branches": [
+      "main",
+      "next"
+    ]
   }
 }

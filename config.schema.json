@@ -1,5 +1,5 @@
 {
-  "pluginAlias": "Homebridge Soil Mositure and Temperature sensor",
+  "pluginAlias": "SoilMoistureTempSensor",
   "pluginType": "accessory",
   "singular": false,
   "customUi": false,
@@ -10,7 +10,7 @@
         "title": "Name",
         "type": "string",
         "required": true,
-        "default": "My Soil Mositure and Temperature sensor",
+        "default": "My Soil sensor",
         "description": "Plugin name as displayed in the Homebridge log."
       },
       "notificationID": {

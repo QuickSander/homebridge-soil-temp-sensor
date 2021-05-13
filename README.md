@@ -7,7 +7,7 @@ Humidity and temperature are measured at a very low frequency (once per hour) at
 most of the time. Several temperature or humidty Homebridge sensors exist, however none of them supported:
 - only http push notifications.
 - written in TypeScript.
-- Support for FakeGato.
+- support for FakeGato sensor history.
 
 ## Notification Server
 

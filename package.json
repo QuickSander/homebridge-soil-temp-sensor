@@ -30,10 +30,12 @@
   "keywords": [
     "homebridge-plugin",
     "Humidity",
-    "Temperature"
+    "Temperature",
+    "Eve",
+    "fakegato"
   ],
   "dependencies": {
-    "@homebridge/plugin-ui-utils": "^0.0.17"
+    "fakegato-history": "^0.6.1"
   },
   "devDependencies": {
     "@types/node": "^14.10.3",
@@ -44,7 +46,8 @@
     "rimraf": "^3.0.2",
     "semantic-release": "^17.3.1",
     "ts-node": "^9.0.0",
-    "typescript": "^4.0.2"
+    "typescript": "^4.0.2",
+    "homebridge": "^1.3.4"
   },
   "release": {
     "branches": [

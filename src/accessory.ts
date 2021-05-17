@@ -148,7 +148,7 @@ class SoilMoistureTempSensor implements AccessoryPlugin {
       statusLowBattery = hap.Characteristic.StatusLowBattery.BATTERY_LEVEL_LOW;
     }
 
-    this.log.debug('Get current status battery low: ' + (statusLowBattery ? 'Normal' : 'Low') + '.');
+    this.log.debug('Get current status battery low: ' + (statusLowBattery ? 'Low' : 'Normal') + '.');
     return statusLowBattery;
   }
 

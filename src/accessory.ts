@@ -39,20 +39,24 @@ class SoilMoistureTempSensor implements AccessoryPlugin {
 
   public readonly log: Logging;
   public readonly displayName: string;
+  private readonly maxCacheAgeMs: number;
 
   private readonly informationService: Service;
   private readonly moistureService: Service;
   private readonly temperatureService: Service;
+  private readonly batteryService: Service;
   private readonly loggingService;
   public readonly services: Service[];
 
   private currentRelativeHumidity = 0.0;
   private currentTemperature = 0.0;
+  private lastCacheUpdateDateMs = 0;
 
 
   constructor(log: Logging, config: AccessoryConfig, api: API) {
     this.log = log;
     this.displayName = config.name;
+    this.maxCacheAgeMs = (config.maxCacheAgeMin || 5*60) * 60*1000; // 5h default converted to ms.
 
     const FakeGatoHistoryService = fakegato(api);
 
@@ -77,13 +81,17 @@ class SoilMoistureTempSensor implements AccessoryPlugin {
     this.temperatureService.getCharacteristic(hap.Characteristic.CurrentTemperature)
       .onGet(this.handleCurrentTemperatureGet.bind(this));
 
-    
+    // Battery service.
+    this.batteryService = new hap.Service.Battery();
+    this.batteryService.getCharacteristic(hap.Characteristic.StatusLowBattery)
+      .onGet(this.handleStatusLowBatteryGet.bind(this));
 
     // This attribute is required for the custom Fake Gato history and re-used for HomeKit's getServices().
     this.services = [
       this.informationService,
       this.moistureService,
       this.temperatureService,
+      this.batteryService,
     ];
 
     // Fake gato service.
@@ -131,10 +139,25 @@ class SoilMoistureTempSensor implements AccessoryPlugin {
     return this.currentTemperature;
   }
 
+  // Assume battery low when latest data is too old (older than twice the device's interval)
+  handleStatusLowBatteryGet() {
+    
+    let statusLowBattery = hap.Characteristic.StatusLowBattery.BATTERY_LEVEL_NORMAL;
+
+    if( (this.lastCacheUpdateDateMs + this.maxCacheAgeMs) <= Date.now() ) {
+      statusLowBattery = hap.Characteristic.StatusLowBattery.BATTERY_LEVEL_LOW;
+    }
+
+    this.log.debug('Get current status battery low: ' + (statusLowBattery ? 'Normal' : 'Low') + '.');
+    return statusLowBattery;
+  }
+
   // Update cache from received update.
   handleNotification(jsonRequest) {    
     const characteristic = jsonRequest.characteristic;
     const value = jsonRequest.value;
+
+    this.lastCacheUpdateDateMs = Date.now();
         
     if (this.moistureService.testCharacteristic(characteristic)) {
       this.moistureService.updateCharacteristic(characteristic, value);

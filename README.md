@@ -8,6 +8,8 @@ most of the time. Several temperature or humidty Homebridge sensors exist, howev
 - only http push notifications.
 - written in TypeScript.
 - support for FakeGato sensor history.
+- emulted battery low status (my device does not (yet) support battery energy level so I needed a way to inidcate a lost connection
+  while keeping the "no response" reply reserved for homebridge unresponsiveness).
 
 ## Notification Server
 

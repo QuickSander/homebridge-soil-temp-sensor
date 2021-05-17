@@ -13,6 +13,13 @@
         "default": "My Soil sensor",
         "description": "Plugin name as displayed in the Homebridge log."
       },
+      "maxCacheAgeMin": {
+        "title": "Maximum cache age [min]",
+        "type": "number",
+        "required": false,
+        "default": 60,
+        "description": "When no update received within this time, the device's battery status is emulated as low."
+      },
       "notificationID": {
         "title": "Notification ID",
         "type": "string",
@@ -29,6 +36,7 @@
   },
   "form": [
     "name",
+    "maxCacheAgeMin",
     {
       "type": "fieldset",
       "expandable": true,
